@@ -1,0 +1,27 @@
+@page "/color-tool"
+
+@using ToolsApp.Core.Interfaces.Data
+@using ToolsApp.Core.Interfaces.Models
+
+@inject IColorsData colorsData
+
+<ToolHeader HeaderText="Color Tool" />
+
+<ColorList Colors="@colors" OnDeleteColor="deleteColor" />
+
+@code {
+
+  private IEnumerable<IColor> colors = new List<IColor>();
+
+  protected async override Task OnInitializedAsync()
+  {
+    colors = await colorsData.All();
+  }
+
+  private async Task deleteColor(int colorId)
+  {
+    await colorsData.Remove(colorId);
+    colors = await colorsData.All();
+  }
+
+}
