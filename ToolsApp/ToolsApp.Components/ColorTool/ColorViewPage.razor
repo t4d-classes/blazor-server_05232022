@@ -1,0 +1,50 @@
+@page "/color-view/{ColorId:int?}"
+
+@inject IColorsData colorsData
+
+<h2>Color Data</h2>
+
+@if (ColorId == 0) {
+  <p>No Color Specified</p>
+} else {
+  @if (color is null) {
+    <p>Loading color data...</p>
+  } else {
+    <ul>
+      <li>@color.Id</li>
+      <li>@color.Hexcode</li>
+    </ul>
+  }
+}
+
+@code {
+
+  [Parameter]
+  public int ColorId { get; set; }
+
+  [Parameter]
+  public string ColorName { get; set; }
+
+  private IColor color { get; set;}
+
+  protected async override Task OnParametersSetAsync()
+  {
+    if (ColorId > 0) {
+      color = await colorsData.One(ColorId);
+    }
+  }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+      Console.WriteLine("Rendering Color View Page, First Render? " + firstRender.ToString());
+      return Task.CompletedTask;
+
+    }
+
+
+#line default
+#line hidden
+#nullable disable
+
+
+}

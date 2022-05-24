@@ -1,0 +1,27 @@
+<p>Child Two: @Id</p>
+
+@code {
+
+  [Parameter]
+  public string Id { get; set; }
+
+  protected override Task OnInitializedAsync()
+  {
+    Console.WriteLine("Child 2 Initialized");
+    return Task.CompletedTask;
+  }
+
+  protected override Task OnParametersSetAsync()
+  {
+    Console.WriteLine("Child 2 Received Id: " + Id);
+    return Task.CompletedTask;
+  }  
+
+  protected override Task OnAfterRenderAsync(bool firstRender)
+  {
+    Console.WriteLine("Rendering Child 2, First Render? " + firstRender.ToString());
+    return Task.CompletedTask;
+
+  }
+
+}

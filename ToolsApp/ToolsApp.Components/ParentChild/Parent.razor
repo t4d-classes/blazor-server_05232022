@@ -1,0 +1,31 @@
+@page "/parent/{id}"
+
+<ChildOne  />
+<ChildTwo Id="@Id" />
+
+
+@code {
+
+  [Parameter]
+  public string Id { get; set; }
+
+  protected override Task OnInitializedAsync()
+  {
+    Console.WriteLine("Parent Initialized");
+    return Task.CompletedTask;
+  }
+
+  protected override Task OnParametersSetAsync()
+  {
+    Console.WriteLine("Parent Received Id: " + Id);
+    return Task.CompletedTask;
+  }  
+
+  protected override Task OnAfterRenderAsync(bool firstRender)
+  {
+    Console.WriteLine("Rendering Parent, First Render? " + firstRender.ToString());
+    return Task.CompletedTask;
+
+  }
+
+}

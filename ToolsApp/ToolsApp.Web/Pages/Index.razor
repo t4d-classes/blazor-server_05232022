@@ -5,3 +5,13 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+
+  protected override Task OnInitializedAsync()
+  {
+    Console.WriteLine("Home Initialized");
+    return Task.CompletedTask;
+  }
+
+}

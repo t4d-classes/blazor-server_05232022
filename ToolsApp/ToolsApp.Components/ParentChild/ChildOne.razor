@@ -1,0 +1,16 @@
+@inject NavigationManager navigationManager
+
+<button @onclick=@(() => gotoId("1"))>Id = 1</button>
+
+<button @onclick=@(() => gotoId("2"))>Id = 2</button>
+
+<button @onclick=@(() => gotoId("3"))>Id = 3</button>
+
+@code {
+
+  private void gotoId(string id)
+  {
+    navigationManager.NavigateTo("/parent/" + id.ToString());
+  }
+
+}

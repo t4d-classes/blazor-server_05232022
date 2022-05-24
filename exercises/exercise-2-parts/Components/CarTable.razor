@@ -1,0 +1,31 @@
+@using ToolsApp.Core.Interfaces.Models
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if (!Cars.Any()) {
+      <tr><td colspan="4">No cars.</td></tr>
+    } else {
+      @foreach(var car in Cars) {
+        <td>@car?.Id</td>
+        <td>@car?.Make</td>
+        <td>@car?.Model</td>
+        <td>@car?.Year</td>
+      }
+    }
+  </tbody>
+</table>
+
+@code {
+
+  [Parameter]
+  public IEnumerable<ICar> Cars {get; set;} = new List<ICar>();
+
+}
