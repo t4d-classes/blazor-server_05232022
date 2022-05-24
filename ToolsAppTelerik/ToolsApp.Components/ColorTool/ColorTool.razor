@@ -1,0 +1,32 @@
+@page "/color-tool"
+
+@using Core.Interfaces.Data
+@using Core.Interfaces.Models
+
+@inject IColorsData colorsData
+
+<ToolHeader HeaderText="Color Tool" />
+
+<ColorList Colors="@colors" OnDeleteColor="deleteColor" />
+
+<ColorForm ButtonText="Add Color" OnSubmitForm="addColor" />
+
+@code {
+
+  private IEnumerable<IColor> colors = new List<IColor>();
+
+  protected async override Task OnParametersSetAsync()
+  {
+    colors = await colorsData.All();
+  }
+
+  private async Task addColor(NewColor color) {
+    await colorsData.Append(color);
+    colors = await colorsData.All();
+  }
+
+  private async Task deleteColor(int colorId) {
+    await colorsData.Remove(colorId);
+    colors = await colorsData.All();
+  }
+}
