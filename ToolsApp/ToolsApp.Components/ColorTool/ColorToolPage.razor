@@ -9,12 +9,20 @@
 
 <ColorList Colors="@colors" OnDeleteColor="deleteColor" />
 
+<ColorForm ButtonText="Add Color" OnSubmitColor="addColor" />
+
 @code {
 
   private IEnumerable<IColor> colors = new List<IColor>();
 
   protected async override Task OnInitializedAsync()
   {
+    colors = await colorsData.All();
+  }
+
+  private async Task addColor(INewColor newColor)
+  {
+    await colorsData.Append(newColor);
     colors = await colorsData.All();
   }
 

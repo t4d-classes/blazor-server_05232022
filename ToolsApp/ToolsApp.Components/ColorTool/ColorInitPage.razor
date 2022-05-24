@@ -1,0 +1,53 @@
+@page "/color-init/{ColorId:int?}"
+
+@inject IColorsData colorsData
+
+<h2>Color Data</h2>
+
+@if (ColorId == 0) {
+  <p>No Color Specified</p>
+} else {
+  @if (color is null) {
+    <p>Loading color data...</p>
+  } else {
+    <ul>
+      <li>@color.Id</li>
+      <li>@color.Hexcode</li>
+    </ul>
+  }
+}
+
+@code {
+
+  [Parameter]
+  public int ColorId { get; set; }
+
+  private IColor color { get; set;}
+
+  protected override void OnInitialized()
+  {
+    if (ColorId > 0) {
+      Task.Run(() => colorsData.One(ColorId)).ContinueWith(task => {
+        InvokeAsync(() => {
+          color = task.Result;
+          Console.WriteLine("color obj: " + color.Name);
+          StateHasChanged();
+        });
+      });
+    }
+  }
+
+  protected override Task OnAfterRenderAsync(bool firstRender)
+  {
+    Console.WriteLine("Rendering Color Init Page, First Render? " + firstRender.ToString());
+    return Task.CompletedTask;
+
+  }
+
+
+#line default
+#line hidden
+#nullable disable
+
+
+}

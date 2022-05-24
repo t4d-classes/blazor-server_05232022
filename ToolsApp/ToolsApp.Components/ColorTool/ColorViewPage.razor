@@ -1,4 +1,4 @@
-@page "/color-view/{ColorId:int?}"
+@page "/color-view/{ColorName}/{ColorId:int?}"
 
 @inject IColorsData colorsData
 
@@ -27,24 +27,32 @@
 
   private IColor color { get; set;}
 
-  protected async override Task OnParametersSetAsync()
+  public async override Task SetParametersAsync(ParameterView parameters)
+  {
+    if (parameters.TryGetValue<int>(nameof(ColorId), out var colorId)) {
+      if (colorId > 0 && colorId != ColorId) {
+        Console.Write("get color: " + colorId.ToString());
+        ColorId = colorId;
+        color = await colorsData.One(ColorId);
+        StateHasChanged();
+      }
+    }
+
+    await base.SetParametersAsync(parameters);
+  }
+
+  @* protected async override Task OnParametersSetAsync()
   {
     if (ColorId > 0) {
       color = await colorsData.One(ColorId);
     }
+  } *@
+
+  protected override Task OnAfterRenderAsync(bool firstRender)
+  {
+    Console.WriteLine("Rendering Color View Page, First Render? " + firstRender.ToString());
+    return Task.CompletedTask;
+
   }
-
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-      Console.WriteLine("Rendering Color View Page, First Render? " + firstRender.ToString());
-      return Task.CompletedTask;
-
-    }
-
-
-#line default
-#line hidden
-#nullable disable
-
 
 }
