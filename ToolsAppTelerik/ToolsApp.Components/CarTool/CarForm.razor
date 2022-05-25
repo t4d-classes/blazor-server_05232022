@@ -6,26 +6,31 @@
   <label>
     Make:
     <InputText @bind-Value="carForm.Make" />
+    <ValidationMessage For=@(() => carForm.Make) style="display:inline;" />
   </label>
 
   <label>
     Model:
     <InputText @bind-Value="carForm.Model" />
+    <ValidationMessage For=@(() => carForm.Model) style="display:inline;" />
   </label>
 
   <label>
     Year:
     <InputNumber @bind-Value="carForm.Year" />
+    <ValidationMessage For=@(() => carForm.Year) style="display:inline;" />
   </label>
 
   <label>
     Color:
     <InputText @bind-Value="carForm.Color" />
+    <ValidationMessage For=@(() => carForm.Color) style="display:inline;" />
   </label>
 
   <label>
     Price:
     <InputNumber @bind-Value="carForm.Price" />
+    <ValidationMessage For=@(() => carForm.Price) style="display:inline;" />
   </label>
 
   <button>@ButtonText</button>
@@ -66,12 +71,15 @@
     public string Model { get; set; } = "";
   
     [Required]
+    [MinYear]
     public int Year { get; set; } = 1900;
 
     [Required]
     public string Color { get; set; } = "";
 
     [Required]
+    [Range(typeof(Decimal), "0", "1000000000",
+      ErrorMessage = "The price cannot be less than zero.")]
     public decimal Price { get; set; } = 0;
   }
 }

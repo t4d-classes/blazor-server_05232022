@@ -8,14 +8,29 @@
 <ToolHeader HeaderText="Car Tool" />
 
 <CarTable Cars="@cars" EditCarId="@editCarId"
-  OnEditCar="doEditCar" OnDeleteCar="doDeleteCar"
+  OnEditCar="doEditCar" OnDeleteCar="doConfirmDeleteCar"
   OnSaveCar="doSaveCar" OnCancelCar="doCancelCar" />
 
+<CarForm ButtonText="Add Car" OnSubmitForm="doAddCar" />
+
+<TelerikDialog @bind-Visible="@showConfirmDeleteCar" Title="Confirm Delete" CloseOnOverlayClick="false">
+  <DialogContent>
+    Are you sure you want to delete the car?
+  </DialogContent>
+  <DialogButtons>
+    <TelerikButton OnClick="doDeleteCar">Yes</TelerikButton>
+    <TelerikButton OnClick="doCancelDeleteCar">No</TelerikButton>
+  </DialogButtons>
+</TelerikDialog>
+
 @code {
+
+  private bool showConfirmDeleteCar { get; set; } = false;
 
   private IEnumerable<ICar> cars = new List<ICar>();
 
   private int editCarId = -1;
+  private int pendingDeleteCarId = -1;
 
   protected async override Task OnParametersSetAsync()
   {
@@ -45,10 +60,25 @@
     editCarId = -1;
   }
 
-  private async Task doDeleteCar(int carId) {
-    await carsData.Remove(carId);
+  private void doConfirmDeleteCar(int carId) {
+    showConfirmDeleteCar = true;
+    pendingDeleteCarId = carId;
+  }
+
+  private async Task doDeleteCar() {
+    await carsData.Remove(pendingDeleteCarId);
     cars = await carsData.All();
     editCarId = -1;
+    doCloseConfirmDeleteCar();
+  }
+
+  private void doCancelDeleteCar() {
+    doCloseConfirmDeleteCar();
+  }
+
+  private void doCloseConfirmDeleteCar() {
+    showConfirmDeleteCar = false;
+    pendingDeleteCarId = -1;
   }
 
 }
