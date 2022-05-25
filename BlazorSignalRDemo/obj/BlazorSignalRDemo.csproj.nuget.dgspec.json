@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ericwgreene/git/github.com/t4d-classes-prep/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj": {}
+    "/Users/ericwgreene/git/github.com/t4d-classes/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj": {}
   },
   "projects": {
-    "/Users/ericwgreene/git/github.com/t4d-classes-prep/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj": {
+    "/Users/ericwgreene/git/github.com/t4d-classes/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ericwgreene/git/github.com/t4d-classes-prep/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj",
+        "projectUniqueName": "/Users/ericwgreene/git/github.com/t4d-classes/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj",
         "projectName": "BlazorSignalRDemo",
-        "projectPath": "/Users/ericwgreene/git/github.com/t4d-classes-prep/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj",
+        "projectPath": "/Users/ericwgreene/git/github.com/t4d-classes/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj",
         "packagesPath": "/Users/ericwgreene/.nuget/packages/",
-        "outputPath": "/Users/ericwgreene/git/github.com/t4d-classes-prep/blazor-server_05232022/BlazorSignalRDemo/obj/",
+        "outputPath": "/Users/ericwgreene/git/github.com/t4d-classes/blazor-server_05232022/BlazorSignalRDemo/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ericwgreene/.nuget/NuGet/NuGet.Config"

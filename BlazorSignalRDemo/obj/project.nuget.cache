@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "urOX3/xJ4TKazgmQumalbvKFuAr0qBjGR/5XT5wZCITyi2JrxE94tAr13zE9QAf/wTvkRL2NF34LHLGcAfHMWg==",
+  "dgSpecHash": "kbQ9dX4daIxfb624lpMXJRgiwFZwGZf1YW/Lc6g41rNKpSEtfL1mWugWWi/sx9j93SnLES0aeHg9K8ABTQZj6A==",
   "success": true,
-  "projectFilePath": "/Users/ericwgreene/git/github.com/t4d-classes-prep/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj",
+  "projectFilePath": "/Users/ericwgreene/git/github.com/t4d-classes/blazor-server_05232022/BlazorSignalRDemo/BlazorSignalRDemo.csproj",
   "expectedPackageFiles": [
     "/Users/ericwgreene/.nuget/packages/microsoft.aspnetcore.connections.abstractions/5.0.17/microsoft.aspnetcore.connections.abstractions.5.0.17.nupkg.sha512",
     "/Users/ericwgreene/.nuget/packages/microsoft.aspnetcore.http.connections.client/5.0.17/microsoft.aspnetcore.http.connections.client.5.0.17.nupkg.sha512",

@@ -39,9 +39,9 @@ namespace ToolsApp.Web
             // services.AddSingleton<IColorsData, ColorsInMemoryData>();
             // services.AddSingleton<ICarsData, CarsInMemoryData>();
 
-            services.AddSingleton<DataContext>();
-            services.AddSingleton<IColorsData, ColorsSqlServerData>();
-            services.AddSingleton<ICarsData, CarsSqlServerData>();
+            services.AddScoped<DataContext>();
+            services.AddScoped<IColorsData, ColorsSqlServerData>();
+            services.AddScoped<ICarsData, CarsSqlServerData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
