@@ -1,11 +1,12 @@
 @page "/color-tool"
 
-@using Core.Interfaces.Data
-@using Core.Interfaces.Models
-
 @inject IColorsData colorsData
+@inject IScreenBlocker screenBlocker
+@inject IJSRuntime JS
 
 <ToolHeader HeaderText="Color Tool" />
+
+<button type="button" id="refresh-colors-button">Refresh Colors</button>
 
 <ColorList Colors="@colors" OnDeleteColor="deleteColor" />
 
@@ -15,9 +16,39 @@
 
   private IEnumerable<IColor> colors = new List<IColor>();
 
+  private bool _firstRender = true;
+
+  private DotNetObjectReference<IColorsData> colorsDataRef;
+
   protected async override Task OnParametersSetAsync()
   {
+    // subsequent renders are in the browser (not static prerendering) and
+    // have access to JavaScript
+    if (!_firstRender) {
+      await refreshColors();
+    }
+  }    
+
+  protected async override Task OnAfterRenderAsync(bool firstRender)
+  {
+    colorsDataRef = DotNetObjectReference.Create(colorsData);
+
+    // run the JS code after the first render to avoid prerendering error
+    if (firstRender) {
+      _firstRender = false;
+      await JS.InvokeVoidAsync("app.setupColorsRefresh", colorsDataRef);
+      await JS.InvokeVoidAsync("app.setTitle", "Color Tool");
+      await refreshColors();
+      StateHasChanged();
+    }
+  }
+
+  private async Task refreshColors()
+  {
+    await screenBlocker.BlockScreen();
     colors = await colorsData.All();
+    await Task.Delay(1000);
+    await screenBlocker.UnblockScreen();
   }
 
   private async Task addColor(NewColor color) {
@@ -26,7 +57,13 @@
   }
 
   private async Task deleteColor(int colorId) {
-    await colorsData.Remove(colorId);
-    colors = await colorsData.All();
+    if (await JS.InvokeAsync<bool>(
+      "confirm",
+      "Are you sure you want to delete the color?")) {
+
+      await colorsData.Remove(colorId);
+      colors = await colorsData.All();
+    }
+
   }
 }

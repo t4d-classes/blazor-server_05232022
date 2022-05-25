@@ -1,3 +1,5 @@
+@inject IJSRuntime JS
+
 <EditForm Model="@colorForm" OnValidSubmit="@doSubmitForm">
 
   <DataAnnotationsValidator />
@@ -5,7 +7,7 @@
 
   <label>
     Name:
-    <InputText @bind-Value="colorForm.Name" />
+    <InputText id="colorFormName" @bind-Value="colorForm.Name" />
     <ValidationMessage For=@(() => colorForm.Name) style="display:inline;" />
   </label>
 
@@ -28,6 +30,13 @@
 
   [Parameter]
   public EventCallback<NewColor> OnSubmitForm { get; set; }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender) {
+      await JS.InvokeVoidAsync("app.setFocus", "#colorFormName");
+    }
+  }
 
 
   private async Task doSubmitForm() {

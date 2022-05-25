@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.17" />
+    <PackageReference Include="Microsoft.JSInterop" Version="5.0.17" />
     <PackageReference Include="Telerik.UI.for.Blazor" Version="3.3.0" />
   </ItemGroup>
 

@@ -9,10 +9,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ToolsApp.Core.Interfaces.Data;
-using ToolsApp.Web.Data;
 
+using ToolsApp.Core.Interfaces.Data;
+using ToolsApp.Core.Interfaces.Web;
 using ToolsApp.Data;
+using ToolsApp.Web.Data;
+using ToolsApp.Web.Services;
+
 
 namespace ToolsApp.Web
 {
@@ -42,6 +45,8 @@ namespace ToolsApp.Web
             services.AddScoped<DataContext>();
             services.AddScoped<IColorsData, ColorsSqlServerData>();
             services.AddScoped<ICarsData, CarsSqlServerData>();
+
+            services.AddScoped<IScreenBlocker, ScreenBlocker>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
