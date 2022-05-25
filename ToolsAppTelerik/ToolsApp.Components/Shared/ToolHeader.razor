@@ -1,3 +1,5 @@
+@inject IJSRuntime JS
+
 <header>
   <h1>@HeaderText</h1>
 </header>
@@ -6,5 +8,10 @@
 
   [Parameter]
   public string HeaderText { get; set; } = "The Tool";
+
+  protected async override Task OnAfterRenderAsync(bool firstRender)
+  {
+    await JS.InvokeVoidAsync("app.setTitle", HeaderText);
+  }  
 
 }

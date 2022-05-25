@@ -1,6 +1,9 @@
 @page "/car-tool"
 
 @inject ICarsData carsData
+@inject IScreenBlocker screenBlocker
+@inject IAlert alert
+@inject IJSRuntime JS
 
 <ToolHeader HeaderText="Car Tool" />
 
@@ -28,11 +31,37 @@
 
   private int editCarId = -1;
   private int pendingDeleteCarId = -1;
+  private bool _firstRender = true;
+
 
   protected async override Task OnParametersSetAsync()
   {
-    cars = await carsData.All();
+    // subsequent renders are in the browser (not static prerendering) and
+    // have access to JavaScript
+    if (!_firstRender) {
+      await refreshCars();
+    }
+  }    
+
+  protected async override Task OnAfterRenderAsync(bool firstRender)
+  {
+    // run the JS code after the first render to avoid prerendering error
+    if (firstRender) {
+      _firstRender = false;
+      @* await JS.InvokeVoidAsync("app.setTitle", "Car Tool"); *@
+      await refreshCars();
+      StateHasChanged();
+    }
   }
+
+
+  private async Task refreshCars()
+  {
+    await screenBlocker.BlockScreen();
+    cars = await carsData.All();
+    editCarId = -1;
+    await screenBlocker.UnblockScreen();
+  }  
 
   private void doEditCar(int carId)
   {
@@ -46,15 +75,14 @@
 
   private async Task doAddCar(INewCar car) {
     await carsData.Append(car);
-    cars = await carsData.All();
-    editCarId = -1;
+    await refreshCars();
+    await alert.Notify("Car added!");
   }
 
   private async Task doSaveCar(ICar car)
   {
     await carsData.Replace(car);
-    cars = await carsData.All();
-    editCarId = -1;
+    await refreshCars();
   }
 
   private void doConfirmDeleteCar(int carId) {
@@ -64,8 +92,7 @@
 
   private async Task doDeleteCar() {
     await carsData.Remove(pendingDeleteCarId);
-    cars = await carsData.All();
-    editCarId = -1;
+    await refreshCars();
     doCloseConfirmDeleteCar();
   }
 

@@ -37,7 +37,7 @@
     if (firstRender) {
       _firstRender = false;
       await JS.InvokeVoidAsync("app.setupColorsRefresh", colorsDataRef);
-      await JS.InvokeVoidAsync("app.setTitle", "Color Tool");
+      @* await JS.InvokeVoidAsync("app.setTitle", "Color Tool"); *@
       await refreshColors();
       StateHasChanged();
     }

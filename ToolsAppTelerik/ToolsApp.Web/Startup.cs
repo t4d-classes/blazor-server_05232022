@@ -47,6 +47,7 @@ namespace ToolsApp.Web
             services.AddScoped<ICarsData, CarsSqlServerData>();
 
             services.AddScoped<IScreenBlocker, ScreenBlocker>();
+            services.AddScoped<IAlert, JsWindowAlert>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
